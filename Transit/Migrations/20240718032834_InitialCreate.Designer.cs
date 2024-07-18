@@ -8,7 +8,7 @@ using Transit.Data;
 namespace Transit.Migrations
 {
     [DbContext(typeof(TransitDataContext))]
-    [Migration("20240718021134_InitialCreate")]
+    [Migration("20240718032834_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,7 +17,7 @@ namespace Transit.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.17");
 
-            modelBuilder.Entity("Transit.Models.RouteSchedule", b =>
+            modelBuilder.Entity("Transit.Models.Schedule", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace Transit.Migrations
 
                     b.HasIndex("StopNumber");
 
-                    b.ToTable("RouteSchedules");
+                    b.ToTable("Schedules");
 
                     b.HasData(
                         new
@@ -578,7 +578,7 @@ namespace Transit.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Transit.Models.RouteStop", b =>
+            modelBuilder.Entity("Transit.Models.Stop", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -599,278 +599,278 @@ namespace Transit.Migrations
                     b.HasIndex("Number")
                         .IsUnique();
 
-                    b.ToTable("RouteStops");
+                    b.ToTable("Stops");
 
                     b.HasData(
                         new
                         {
                             Id = 1L,
-                            Name = "Beaudry Ave & 3rd St",
+                            Name = "Southbound - Beaudry Ave & 3rd St",
                             Number = (short)6041,
                             Order = (short)1
                         },
                         new
                         {
                             Id = 2L,
-                            Name = "4th St & Figueroa St",
+                            Name = "Southbound - 4th St & Figueroa St",
                             Number = (short)6138,
                             Order = (short)2
                         },
                         new
                         {
                             Id = 3L,
-                            Name = "Flower St & 5th St",
+                            Name = "Southbound - Flower St & 5th St",
                             Number = (short)6021,
                             Order = (short)3
                         },
                         new
                         {
                             Id = 4L,
-                            Name = "Flower St & 7th St",
+                            Name = "Southbound - Flower St & 7th St",
                             Number = (short)6139,
                             Order = (short)4
                         },
                         new
                         {
                             Id = 5L,
-                            Name = "Flower St & 8th St",
+                            Name = "Southbound - Flower St & 8th St",
                             Number = (short)6140,
                             Order = (short)5
                         },
                         new
                         {
                             Id = 6L,
-                            Name = "Flower St & 9th St",
+                            Name = "Southbound - Flower St & 9th St",
                             Number = (short)9638,
                             Order = (short)6
                         },
                         new
                         {
                             Id = 7L,
-                            Name = "Flower St & Olympic Blvd",
+                            Name = "Southbound - Flower St & Olympic Blvd",
                             Number = (short)6142,
                             Order = (short)7
                         },
                         new
                         {
                             Id = 8L,
-                            Name = "Figueroa & 12th St (Crypto.com Arena)",
+                            Name = "Southbound - Figueroa & 12th St (Crypto.com Arena)",
                             Number = (short)6143,
                             Order = (short)8
                         },
                         new
                         {
                             Id = 9L,
-                            Name = "Figueroa St & Pico Blvd",
+                            Name = "Southbound - Figueroa St & Pico Blvd",
                             Number = (short)6144,
                             Order = (short)9
                         },
                         new
                         {
                             Id = 10L,
-                            Name = "Figueroa St & Venice Blvd",
+                            Name = "Southbound - Figueroa St & Venice Blvd",
                             Number = (short)6145,
                             Order = (short)10
                         },
                         new
                         {
                             Id = 11L,
-                            Name = "Figueroa St & Washington Blvd",
+                            Name = "Southbound - Figueroa St & Washington Blvd",
                             Number = (short)6146,
                             Order = (short)11
                         },
                         new
                         {
                             Id = 12L,
-                            Name = "Figueroa St & 23rd St",
+                            Name = "Southbound - Figueroa St & 23rd St",
                             Number = (short)6147,
                             Order = (short)12
                         },
                         new
                         {
                             Id = 13L,
-                            Name = "Figueroa St & Adams Blvd",
+                            Name = "Southbound - Figueroa St & Adams Blvd",
                             Number = (short)6148,
                             Order = (short)13
                         },
                         new
                         {
                             Id = 14L,
-                            Name = "Figueroa St & 30th St",
+                            Name = "Southbound - Figueroa St & 30th St",
                             Number = (short)6149,
                             Order = (short)14
                         },
                         new
                         {
                             Id = 15L,
-                            Name = "Figueroa St & Jefferson Blvd",
+                            Name = "Southbound - Figueroa St & Jefferson Blvd",
                             Number = (short)6150,
                             Order = (short)15
                         },
                         new
                         {
                             Id = 16L,
-                            Name = "Figueroa St & McCarthy Way",
+                            Name = "Southbound - Figueroa St & McCarthy Way",
                             Number = (short)6151,
                             Order = (short)16
                         },
                         new
                         {
                             Id = 17L,
-                            Name = "Exposition Blvd & Trousdale Pkwy",
+                            Name = "Southbound - Exposition Blvd & Trousdale Pkwy",
                             Number = (short)6216,
                             Order = (short)17
                         },
                         new
                         {
                             Id = 18L,
-                            Name = "Exposition Blvd & Watt Way",
+                            Name = "Southbound - Exposition Blvd & Watt Way",
                             Number = (short)6152,
                             Order = (short)18
                         },
                         new
                         {
                             Id = 19L,
-                            Name = "Vermont Ave & Exposition Blvd",
+                            Name = "Northbound - Vermont Ave & Exposition Blvd",
                             Number = (short)6040,
                             Order = (short)19
                         },
                         new
                         {
                             Id = 20L,
-                            Name = "Vermont Ave & 37th Pl",
+                            Name = "Northbound - Vermont Ave & 37th Pl",
                             Number = (short)6119,
                             Order = (short)20
                         },
                         new
                         {
                             Id = 21L,
-                            Name = "Vermont Ave & 36th Pl",
+                            Name = "Northbound - Vermont Ave & 36th Pl",
                             Number = (short)6120,
                             Order = (short)21
                         },
                         new
                         {
                             Id = 22L,
-                            Name = "Jefferson Blvd & Vermont Ave",
+                            Name = "Northbound - Jefferson Blvd & Vermont Ave",
                             Number = (short)6121,
                             Order = (short)22
                         },
                         new
                         {
                             Id = 23L,
-                            Name = "Jefferson Blvd & McClintock Ave",
+                            Name = "Northbound - Jefferson Blvd & McClintock Ave",
                             Number = (short)6122,
                             Order = (short)23
                         },
                         new
                         {
                             Id = 24L,
-                            Name = "Jefferson Blvd & Hoover St",
+                            Name = "Northbound - Jefferson Blvd & Hoover St",
                             Number = (short)6123,
                             Order = (short)24
                         },
                         new
                         {
                             Id = 25L,
-                            Name = "Figueroa St & 33rd St",
+                            Name = "Northbound - Figueroa St & 33rd St",
                             Number = (short)6124,
                             Order = (short)25
                         },
                         new
                         {
                             Id = 26L,
-                            Name = "Figueroa St & 30th St",
+                            Name = "Northbound - Figueroa St & 30th St",
                             Number = (short)6125,
                             Order = (short)26
                         },
                         new
                         {
                             Id = 27L,
-                            Name = "Figueroa St & Adams Blvd",
+                            Name = "Northbound - Figueroa St & Adams Blvd",
                             Number = (short)6126,
                             Order = (short)27
                         },
                         new
                         {
                             Id = 28L,
-                            Name = "Figueroa St & 23rd St",
+                            Name = "Northbound - Figueroa St & 23rd St",
                             Number = (short)6127,
                             Order = (short)28
                         },
                         new
                         {
                             Id = 29L,
-                            Name = "Figueroa St & Washington Blvd",
+                            Name = "Northbound - Figueroa St & Washington Blvd",
                             Number = (short)6128,
                             Order = (short)29
                         },
                         new
                         {
                             Id = 30L,
-                            Name = "Figueroa St & Venice Blvd",
+                            Name = "Northbound - Figueroa St & Venice Blvd",
                             Number = (short)6129,
                             Order = (short)30
                         },
                         new
                         {
                             Id = 31L,
-                            Name = "Figueroa St & 12th St",
+                            Name = "Northbound - Figueroa St & 12th St",
                             Number = (short)6130,
                             Order = (short)31
                         },
                         new
                         {
                             Id = 32L,
-                            Name = "Figueroa & 11th St (Crypto.com Arena)",
+                            Name = "Northbound - Figueroa & 11th St (Crypto.com Arena)",
                             Number = (short)6132,
                             Order = (short)32
                         },
                         new
                         {
                             Id = 33L,
-                            Name = "Figueroa St & Olympic Blvd",
+                            Name = "Northbound - Figueroa St & Olympic Blvd",
                             Number = (short)6133,
                             Order = (short)33
                         },
                         new
                         {
                             Id = 34L,
-                            Name = "Figueroa St & 8th St",
+                            Name = "Northbound - Figueroa St & 8th St",
                             Number = (short)6135,
                             Order = (short)34
                         },
                         new
                         {
                             Id = 35L,
-                            Name = "Figueroa St & 7th St",
+                            Name = "Northbound - Figueroa St & 7th St",
                             Number = (short)6136,
                             Order = (short)35
                         },
                         new
                         {
                             Id = 36L,
-                            Name = "Figueroa St & 5th St",
+                            Name = "Northbound - Figueroa St & 5th St",
                             Number = (short)6137,
                             Order = (short)36
                         });
                 });
 
-            modelBuilder.Entity("Transit.Models.RouteSchedule", b =>
+            modelBuilder.Entity("Transit.Models.Schedule", b =>
                 {
-                    b.HasOne("Transit.Models.RouteStop", "RouteStop")
-                        .WithMany("RouteSchedules")
+                    b.HasOne("Transit.Models.Stop", "Stop")
+                        .WithMany("Schedules")
                         .HasForeignKey("StopNumber")
                         .HasPrincipalKey("Number")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RouteStop");
+                    b.Navigation("Stop");
                 });
 
-            modelBuilder.Entity("Transit.Models.RouteStop", b =>
+            modelBuilder.Entity("Transit.Models.Stop", b =>
                 {
-                    b.Navigation("RouteSchedules");
+                    b.Navigation("Schedules");
                 });
 #pragma warning restore 612, 618
         }

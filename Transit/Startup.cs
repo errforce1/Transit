@@ -25,8 +25,8 @@ namespace Transit
             var connectionString = Configuration.GetConnectionString("TransitLocalFile");
             services.AddDbContext<TransitDataContext>(options => options.UseSqlite(connectionString));
             
-            services.AddTransient<IRoutesRepository, RoutesRepository>();
-            services.AddTransient<IRoutesService, RoutesService>();
+            services.AddTransient<IScheduleRepository, ScheduleRepository>();
+            services.AddTransient<IScheduleService, ScheduleService>();
             
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Transit", Version = "v1" }); });

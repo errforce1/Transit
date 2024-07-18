@@ -7,23 +7,23 @@ using Transit.Models;
 
 namespace Transit.Repository
 {
-    public class RoutesRepository : IRoutesRepository
+    public class ScheduleRepository : IScheduleRepository
     {
         protected TransitDataContext _transitDataContext;
         
-        public RoutesRepository(TransitDataContext transitDataContext)
+        public ScheduleRepository(TransitDataContext transitDataContext)
         {
             _transitDataContext = transitDataContext;
         }
         
-        public async Task<IEnumerable<RouteStop>> GetAllStops()
+        public async Task<IEnumerable<Stop>> GetAllStops()
         {
-            return await _transitDataContext.RouteStops.OrderBy(routeStop => routeStop.Order).ToListAsync();
+            return await _transitDataContext.Stops.OrderBy(routeStop => routeStop.Order).ToListAsync();
         }
         
-        public async Task<IEnumerable<RouteSchedule>> GetSchedulesByStopNumber(long stopNumber)
+        public async Task<IEnumerable<Schedule>> GetSchedulesByStopNumber(long stopNumber)
         {
-            return await _transitDataContext.RouteSchedules.Where(routeSchedule =>
+            return await _transitDataContext.Schedules.Where(routeSchedule =>
                 routeSchedule.StopNumber == stopNumber).ToListAsync();
         }
     }

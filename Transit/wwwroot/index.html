@@ -24,7 +24,7 @@
         // Fetch the list of all stops and populate the select element
         async function fetchStops() {
             try {
-                const response = await fetch('/Routes');
+                const response = await fetch('/Schedule');
                 if (!response.ok) throw new Error('Network response was not ok');
                 const stops = await response.json();
                 stops.forEach(stop => {
@@ -41,7 +41,7 @@
         // Fetch the schedule for the selected stop
         async function fetchSchedule(stopNumber, browserTime) {
             try {
-                const response = await fetch(`/Routes/${stopNumber}/${browserTime}`);
+                const response = await fetch(`/Schedule/${stopNumber}/${browserTime}`);
                 if (!response.ok) {
                     scheduleResultDiv.textContent = 'No schedule found for the selected stop.';
                     return;

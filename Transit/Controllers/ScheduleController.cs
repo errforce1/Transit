@@ -9,25 +9,25 @@ namespace Transit.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RoutesController : ControllerBase
+    public class ScheduleController : ControllerBase
     {
-        private readonly IRoutesService _routesService;
+        private readonly IScheduleService _scheduleService;
 
-        public RoutesController(IRoutesService routesService)
+        public ScheduleController(IScheduleService scheduleService)
         {
-            _routesService = routesService;
+            _scheduleService = scheduleService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<RouteStopDto>> Get()
+        public async Task<IEnumerable<StopDto>> Get()
         {
-            return await _routesService.ListAllStops();
+            return await _scheduleService.ListAllStops();
         }
 
         [HttpGet("{stopNumber}/{browserTime}")]
         public async Task<IActionResult> Get([FromRoute] short stopNumber, [FromRoute] DateTimeOffset browserTime)
         {
-            var schedule = await _routesService.GetNextStopScheduleByTime(stopNumber, browserTime.DateTime);
+            var schedule = await _scheduleService.GetNextStopScheduleByTime(stopNumber, browserTime.DateTime);
             if (null == schedule)
             {
                 return NotFound();

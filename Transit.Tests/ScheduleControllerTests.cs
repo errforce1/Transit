@@ -11,50 +11,50 @@ using Microsoft.AspNetCore.Mvc;
 namespace Transit.Tests
 {
     [TestFixture]
-    public class RoutesControllerTests
+    public class ScheduleControllerTests
     {
-        private Mock<IRoutesService> _mockRoutesService;
-        private RoutesController _controller;
+        private Mock<IScheduleService> _mockScheduleService;
+        private ScheduleController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            _mockRoutesService = new Mock<IRoutesService>();
-            _controller = new RoutesController(_mockRoutesService.Object);
+            _mockScheduleService = new Mock<IScheduleService>();
+            _controller = new ScheduleController(_mockScheduleService.Object);
         }
 
         [Test]
-        public async Task Get_Should_Return_List_Of_RouteStopDto()
+        public async Task Get_Should_Return_List_Of_StopDto()
         {
             // Arrange
-            var mockStops = new List<RouteStopDto>
+            var mockStops = new List<StopDto>
             {
                 new() { Number = 1, Name = "Stop1" },
                 new() { Number = 2, Name = "Stop2" }
             };
-            _mockRoutesService.Setup(service => service.ListAllStops()).ReturnsAsync(mockStops);
+            _mockScheduleService.Setup(service => service.ListAllStops()).ReturnsAsync(mockStops);
 
             // Act
             var result = await _controller.Get();
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf<IEnumerable<RouteStopDto>>(result);
-            Assert.AreEqual(2, ((List<RouteStopDto>)result).Count);
+            Assert.IsInstanceOf<IEnumerable<StopDto>>(result);
+            Assert.AreEqual(2, ((List<StopDto>)result).Count);
         }
 
         [Test]
-        public async Task Get_ByStopNumberAndBrowserTime_Should_Return_RouteScheduleDto()
+        public async Task Get_ByStopNumberAndBrowserTime_Should_Return_ScheduleDto()
         {
             // Arrange
             short stopNumber = 1;
             var browserTime = DateTimeOffset.Now;
-            var mockSchedule = new RouteScheduleDto
+            var mockSchedule = new ScheduleDto
             {
                 StopNumber = stopNumber,
                 Timepoint = short.Parse($"{browserTime.DateTime.AddMinutes(5):HHmm}")
             };
-            _mockRoutesService.Setup(service => service.GetNextStopScheduleByTime(stopNumber, browserTime.DateTime))
+            _mockScheduleService.Setup(service => service.GetNextStopScheduleByTime(stopNumber, browserTime.DateTime))
                 .ReturnsAsync(mockSchedule);
 
             // Act
@@ -66,9 +66,9 @@ namespace Transit.Tests
 
             var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult);
-            Assert.IsInstanceOf<RouteScheduleDto>(okResult.Value);
+            Assert.IsInstanceOf<ScheduleDto>(okResult.Value);
 
-            var schedule = okResult.Value as RouteScheduleDto;
+            var schedule = okResult.Value as ScheduleDto;
             Assert.AreEqual(stopNumber, schedule?.StopNumber);
             Assert.AreEqual(mockSchedule.Timepoint, schedule.Timepoint);
         }
@@ -79,8 +79,8 @@ namespace Transit.Tests
             // Arrange
             short stopNumber = 1;
             var browserTime = DateTimeOffset.Now;
-            _mockRoutesService.Setup(service => service.GetNextStopScheduleByTime(stopNumber, browserTime.DateTime))
-                .ReturnsAsync((RouteScheduleDto)null);
+            _mockScheduleService.Setup(service => service.GetNextStopScheduleByTime(stopNumber, browserTime.DateTime))
+                .ReturnsAsync((ScheduleDto)null);
 
             // Act
             var result = await _controller.Get(stopNumber, browserTime) as NotFoundResult;

@@ -1,6 +1,6 @@
 namespace Transit.Dto
 {
-    public class RouteScheduleDto
+    public class ScheduleDto
     {
         public long Id { get; set; }
         public short StopNumber { get; set; }

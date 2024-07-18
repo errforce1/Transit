@@ -8,7 +8,7 @@ describe('Transit Stops Schedule', () => {
     });
 
     it('should populate the stops dropdown', () => {
-        cy.intercept('GET', '/Routes', {
+        cy.intercept('GET', '/Schedule', {
             statusCode: 200,
             body: [
                 { number: 1, name: 'Stop 1' },
@@ -34,7 +34,7 @@ describe('Transit Stops Schedule', () => {
     });
 
     it('should fetch and display the schedule for the selected stop', () => {
-        cy.intercept('GET', '/Routes', {
+        cy.intercept('GET', '/Schedule', {
             statusCode: 200,
             body: [
                 { number: 1, name: 'Stop 1' },
@@ -48,7 +48,7 @@ describe('Transit Stops Schedule', () => {
 
         cy.get('#stops').select('Stop 1');
 
-        cy.intercept('GET', `/Routes/1/*`, {
+        cy.intercept('GET', `/Schedule/1/*`, {
             statusCode: 200,
             body: { timepoint: 1234 }
         }).as('getSchedule');
@@ -60,7 +60,7 @@ describe('Transit Stops Schedule', () => {
     });
 
     it('should display an error message if no schedule is found', () => {
-        cy.intercept('GET', '/Routes', {
+        cy.intercept('GET', '/Schedule', {
             statusCode: 200,
             body: [
                 { number: 1, name: 'Stop 1' },
@@ -74,7 +74,7 @@ describe('Transit Stops Schedule', () => {
 
         cy.get('#stops').select('Stop 1');
 
-        cy.intercept('GET', `/Routes/1/*`, {
+        cy.intercept('GET', `/Schedule/1/*`, {
             statusCode: 404,
             body: {}
         }).as('getSchedule');

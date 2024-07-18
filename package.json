@@ -1,0 +1,17 @@
+{
+  "name": "transit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:cypress:e2e",
+    "test:cypress:open": "cypress open",
+    "test:cypress:e2e": "cypress run --headless --browser chrome",
+    "test:cypress:e2e:ff": "cypress run --headless --browser firefox"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^13.13.1"
+  }
+}

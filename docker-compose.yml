@@ -1,0 +1,8 @@
+﻿services:
+  transit:
+    image: loki/transit
+    build:
+      context: .
+      dockerfile: Transit/Dockerfile
+    ports:
+      - 3000:80

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transit Schedule</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<h1>Transit Stops Schedule</h1>
+<label for="stops">Select Stop:</label>
+<select id="stops">
+    <option value="">Select a stop</option>
+</select>
+<button id="getSchedule">Get Schedule</button>
+<div id="scheduleResult"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const stopsSelect = document.querySelector('#stops');
+        const getScheduleButton = document.querySelector('#getSchedule');
+        const scheduleResultDiv = document.querySelector('#scheduleResult');
+
+        // Fetch the list of all stops and populate the select element
+        async function fetchStops() {
+            try {
+                const response = await fetch('/Routes');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const stops = await response.json();
+                stops.forEach(stop => {
+                    const option = document.createElement('option');
+                    option.value = stop.number;
+                    option.textContent = stop.name;
+                    stopsSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching stops:', error);
+            }
+        }
+
+        // Fetch the schedule for the selected stop
+        async function fetchSchedule(stopNumber, browserTime) {
+            try {
+                const response = await fetch(`/Routes/${stopNumber}/${browserTime}`);
+                if (!response.ok) {
+                    scheduleResultDiv.textContent = 'No schedule found for the selected stop.';
+                    return;
+                }
+                const schedule = await response.json();
+                scheduleResultDiv.textContent = `Next schedule time: ${decodeTime(schedule.timepoint)}`;
+            } catch (error) {
+                console.error('Error fetching schedule:', error);
+                scheduleResultDiv.textContent = 'Error fetching schedule.';
+            }
+        }
+
+        // Generate current date-time for browserTime as datetimeoffset
+        function getCurrentBrowserTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // Format the local date-time as YYYY-MM-DDTHH:mm:ss
+            const localDateTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+
+            // Get the timezone offset in minutes and convert to hours and minutes
+            const timezoneOffset = -now.getTimezoneOffset();
+            const offsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
+            const offsetMinutes = Math.abs(timezoneOffset) % 60;
+            const offsetSign = timezoneOffset >= 0 ? '+' : '-';
+
+            // Format the offset as ±HH:mm
+            const formattedOffset = `${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
+
+            // Combine the local date-time and offset
+            const dateTimeOffset = `${localDateTime}${formattedOffset}`;
+            return dateTimeOffset;
+        }
+
+        // Event listener for the Get Schedule button
+        getScheduleButton.addEventListener('click', () => {
+            const selectedStop = stopsSelect.value;
+            if (!selectedStop) {
+                alert('Please select a stop.');
+                return;
+            }
+            const browserTime = getCurrentBrowserTime();
+            fetchSchedule(selectedStop, browserTime);
+        });
+
+        // Decode HHmm timepoint format to local time
+        function decodeTime(encodedTime) {
+            const timeString = encodedTime.toString().padStart(4, '0');
+            const hours = timeString.slice(0, 2);
+            const minutes = timeString.slice(2, 4);
+            return `${hours}:${minutes}`;
+        }
+
+        // Initial fetch of stops when the page loads
+        fetchStops().then(() => {
+            console.log('Stops fetched successfully');
+        }).catch(error => {
+            console.error('Error in fetching stops:', error);
+        });
+    });
+</script>
+</body>
+</html>

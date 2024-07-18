@@ -8,7 +8,7 @@ This repository contains a Dotnet 5.0 application. Upon running the project, the
 
 ### Prerequisites
 
-- [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [dotnet 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Node.js](https://nodejs.org/) (for running the e2e tests)
 
 ### Running the Application
@@ -16,11 +16,11 @@ This repository contains a Dotnet 5.0 application. Upon running the project, the
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/errforce1/Transit.git
+   cd Transit
    ```
 
-2. **Restore the .NET dependencies and run the application:**
+2. **Restore the dotnet dependencies and run the application:**
 
    ```bash
    dotnet restore
